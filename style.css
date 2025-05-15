@@ -1,0 +1,197 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  transition: 0.3s all ease;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+:root {
+  --primary-color: #4f46e5;
+  --hover-color: #312baa;
+  --secondary-color: #595757;
+  --accent-color: #fff;
+}
+
+.headings {
+  margin: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5em;
+  color: var(--primary-color);
+}
+
+.sub-title {
+  font-size: 1.2em;
+  margin: 10px;
+  color: var(--secondary-color);
+}
+
+/*Input Container*/
+.nav-container {
+  display: flex;
+  background-color: var(--accent-color);
+  padding: 12px;
+  gap: 12px;
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nav-input {
+  padding-left: 10px;
+  width: 90%;
+}
+
+.nav-input::placeholder {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.nav-input:active {
+  border: none;
+  outline: none;
+  border: 2px solid red;
+}
+
+.nav-container select {
+  width: 100px;
+  text-align: center;
+}
+
+.add-note {
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  border: none;
+  width: 100px;
+  border-radius: 4px;
+  padding: 12px 20px;
+  font-weight: 600;
+  transition: 0.3s all ease;
+}
+
+.add-note:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: var(--hover-color);
+}
+
+/*For Modal*/
+.modal {
+  display: none;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  /* height: auto; */
+  background-color: var(--accent-color);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px;
+}
+
+.modal-content h3 {
+  margin: 10px 0px;
+}
+
+.modal-content input {
+  padding: 10px;
+  border: 1px solid black;
+  /* border: 2px solid lightgray; */
+}
+
+.modal-content button {
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-weight: 600;
+  transition: 0.3s all ease;
+}
+
+.modal-content button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  background-color: var(--hover-color);
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.flex-col {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+.fa-xmark {
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.fa-xmark:hover {
+  color: var(--primary-color);
+  transform: scale(1.5);
+}
+
+/*Toggle Classes*/
+.display {
+  display: block !important;
+}
+
+.overlay {
+  display: none;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.notes-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 72%;
+  margin: 20px auto;
+  gap: 20px;
+  text-align: center;
+}
+
+.note {
+  background-color: var(--accent-color);
+  padding: 12px;
+  border-radius: 8px;
+  width: 28%;
+}
+
+.note-head {
+  display: flex;
+  margin: 10px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category {
+  text-align: left;
+}

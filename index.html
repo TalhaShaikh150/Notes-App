@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App</title>
+    <!--Montserrat Font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!--Font-Awesome-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="overlay"></div>
+    <div class="headings">
+      <h1 class="title">Note Book</h1>
+      <p class="sub-title">Store your thoughts and ideas</p>
+    </div>
+
+    <div class="nav-container">
+      <input type="text" class="nav-input" placeholder="Search Notes" />
+      <select name="" id="">
+        All
+        <option value="">All</option>
+      </select>
+      <button class="add-note js-add-note">Add</button>
+    </div>
+
+    <div class="modal">
+      <div class="modal-content">
+        <div class="flex">
+          <h3>New Note</h3>
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+        <label for="title">Title</label>
+        <input type="text" class="js-title" id="title" />
+        <!--Title-->
+        <label for="Category">Category</label>
+        <input type="text" class="js-category" id="Category" />
+        <!--Category-->
+        <label for="Content">Content</label>
+        <textarea name="" class="js-content" id="Content" rows="8"></textarea>
+        <!--Content-->
+        <button class="js-save">Save Note</button>
+      </div>
+    </div>
+
+    <div class="notes-container"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
