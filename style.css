@@ -118,7 +118,7 @@ body {
 .custom-alert {
   position: absolute;
   z-index: 100;
-  top: 0%;
+  top: 2%;
   transform: translate(-50%, -50%);
   width: 80%;
   margin: 0 auto;
@@ -362,5 +362,43 @@ body {
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+
+  .modal {
+    min-width: 90vw;
+    height: auto;
+  }
+
+  .nav-container {
+    width: 90%;
+  }
+
+  .notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 20px auto;
+    gap: 20px;
+  }
+
+  .note {
+    min-width: 90%;
+  }
+
+  .modal-content textarea {
+    height: 6vh;
+  }
+
+  .theme-circle {
+    width: 24px;
+    height: 24px;
+  }
+
+  .custom-alert {
+    height: 6%;
   }
 }
