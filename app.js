@@ -8,18 +8,17 @@ function loadPages() {
   const saveButton = document.querySelector(".js-save");
 
   saveButton.addEventListener("click", () => {
-    addNote();
-    modalElement.classList.remove("display");
-    overLay.classList.remove("display");
+    addNote(modalElement, overLay);
   });
 
   renderNote();
-  displayModal(modalElement, overLay);
+
+  showModal(modalElement, overLay);
   closeModal(modalElement, overLay);
 }
 
 /* This Function Is To Display Modal */
-function displayModal(modalElement, overLay) {
+function showModal(modalElement, overLay) {
   const buttonElement = document.querySelector(".js-add-note");
   const wholeBody = document.body;
 
@@ -49,7 +48,7 @@ function closeModal(modalElement, overLay) {
   }
 }
 
-function addNote() {
+function addNote(modalElement, overLay) {
   const titleInput = document.querySelector(".js-title");
   const categoryInput = document.querySelector(".js-category");
   const contentInput = document.querySelector(".js-content");
@@ -58,15 +57,21 @@ function addNote() {
   const category = categoryInput.value;
   const content = contentInput.value;
 
-  NotesList.unshift({ title, category, content });
+  if (title === "" || category === "" || content === "") {
+    alert("Please Fill All The Fields");
+    return;
+  } else {
+    NotesList.unshift({ title, category, content });
+    renderNote();
+    modalElement.classList.remove("display");
+    overLay.classList.remove("display");
 
-  renderNote();
+    titleInput.value = "";
+    categoryInput.value = "";
+    contentInput.value = "";
 
-  titleInput.value = "";
-  categoryInput.value = "";
-  contentInput.value = "";
-
-  saveToStorage();
+    saveToStorage();
+  }
 }
 
 function renderNote() {
@@ -104,8 +109,19 @@ function deleteNote() {
     icon.addEventListener("click", () => {
       let indexnum = icon.dataset.index;
       NotesList.splice(indexnum, 1);
-      saveToStorage();
-      renderNote();
+      deleteAnimation();
+      setTimeout(() => {
+        saveToStorage();
+        renderNote();
+      }, 400);
+    });
+  });
+}
+function deleteAnimation() {
+  let notes = document.querySelectorAll(".note");
+  notes.forEach((singleNote) => {
+    singleNote.addEventListener("click", () => {
+      singleNote.classList.add("delete-animation");
     });
   });
 }

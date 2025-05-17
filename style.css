@@ -159,7 +159,7 @@ body {
 
 .overlay {
   display: none;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   width: 100%;
@@ -180,8 +180,15 @@ body {
 .note {
   background-color: var(--accent-color);
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 12px;
   width: 28%;
+
+}
+
+.note:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 2px 2px 20px #38333367;
 }
 
 .note-head {
@@ -210,6 +217,24 @@ body {
 }
 
 .fa-trash:hover {
+  cursor: pointer;
   color: var(--primary-color);
   transform: scale(1.2);
+}
+
+/*Delete Animation*/
+.delete-animation {
+  animation: smoke 0.7s ease-out forwards;
+}
+
+@keyframes smoke {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(8px) grayscale(100%);
+  }
 }
