@@ -6,14 +6,48 @@
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: var(--background-body);
 }
 
-:root {
+:root.default {
   --primary-color: #4f46e5;
   --hover-color: #312baa;
   --secondary-color: #595757;
   --accent-color: #fff;
+}
+
+
+:root.red {
+  --primary-color: #ef4444;
+  --hover-color: #dc2626;
+  --secondary-color: #6b7280;
+  --accent-color: #f9fafb;
+  --background-body: #030712;
+}
+
+:root.green {
+  --primary-color: #10b981;
+  /* Green */
+  --hover-color: #059669;
+  /* Dark green */
+  --secondary-color: #4b5563;
+  /* Gray */
+  --accent-color: #ecfdf5;
+  /* Mint */
+  --background-body: #042f2e;
+  /* Dark teal */
+}
+
+:root.purple {
+  --primary-color: #8b5cf6;
+  --hover-color: #7c3aed;
+  --secondary-color: #64748b;
+  --accent-color: #f5f3ff;
+  --background-body: #030712;
+}
+
+.is-toggled {
+  margin-top: -10px;
 }
 
 .headings {
@@ -53,11 +87,6 @@ body {
   font-weight: 500;
 }
 
-.nav-input:active {
-  border: none;
-  outline: none;
-  border: 2px solid red;
-}
 
 .nav-container select {
   width: 100px;
@@ -80,6 +109,36 @@ body {
   transform: scale(1.1);
   background-color: var(--hover-color);
 }
+
+.custom-alert-container {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-alert {
+  position: absolute;
+  z-index: 100;
+  top: 0%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  margin: 0 auto;
+  height: 10vh;
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  align-content: center;
+}
+
+.alert-message {
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  margin: 0;
+  padding: 0;
+}
+
 
 /*For Modal*/
 .modal {
@@ -108,8 +167,14 @@ body {
 .modal-content input {
   padding: 10px;
   border: 1px solid black;
+}
+
+.modal-content textarea {
+  padding: 10px;
+  border: 1px solid black;
   /* border: 2px solid lightgray; */
 }
+
 
 .modal-content button {
   background-color: var(--primary-color);
@@ -134,16 +199,22 @@ body {
 }
 
 .flex-col {
-  display: flex;
+  display: flex z;
   align-items: start;
   flex-direction: column;
   gap: 20px;
 
 }
 
-.fa-xmark .fa-trash {
-  font-size: 1.2em;
+.fa-xmark {
+  font-size: 2em;
   cursor: pointer;
+}
+
+.fa-trash {
+  cursor: pointer;
+  font-size: 1.4em;
+
 }
 
 .fa-xmark:hover {
@@ -155,6 +226,11 @@ body {
 .display {
   display: block !important;
 }
+
+.hide {
+  display: none;
+}
+
 
 
 .overlay {
@@ -181,8 +257,8 @@ body {
   background-color: var(--accent-color);
   padding: 10px;
   border-radius: 12px;
-  width: 28%;
-
+  min-width: 28%;
+  border: 3px solid #f5f3ff;
 }
 
 .note:hover {
@@ -224,7 +300,45 @@ body {
 
 /*Delete Animation*/
 .delete-animation {
-  animation: smoke 0.7s ease-out forwards;
+  animation: smoke 0.3s ease-out forwards;
+}
+
+/*Theme Selectors*/
+.theme-container {
+  display: flex;
+  justify-content: end;
+  margin: 30px;
+  gap: 10px;
+}
+
+.theme-circle {
+  width: 30px;
+  height: 30px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.theme-circle:hover {
+  transform: scale(1.1);
+}
+
+.theme-1 {
+  background-color: red;
+
+}
+
+.theme-2 {
+  background-color: aquamarine;
+
+}
+
+.theme-3 {
+  background-color: blueviolet;
+}
+
+.theme-4 {
+  background-color: #312baa;
 }
 
 @keyframes smoke {
@@ -236,5 +350,17 @@ body {
   100% {
     opacity: 0;
     filter: blur(8px) grayscale(100%);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

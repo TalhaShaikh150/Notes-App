@@ -1,7 +1,7 @@
 let NotesList = JSON.parse(localStorage.getItem("NotesList")) || [];
 
+let previousTheme = JSON.parse(localStorage.getItem("theme")) || ["default"];
 loadPages();
-
 function loadPages() {
   const modalElement = document.querySelector(".modal");
   const overLay = document.querySelector(".overlay");
@@ -10,9 +10,9 @@ function loadPages() {
   saveButton.addEventListener("click", () => {
     addNote(modalElement, overLay);
   });
-
+  switchThemes();
+  restoreTheme();
   renderNote();
-
   showModal(modalElement, overLay);
   closeModal(modalElement, overLay);
 }
@@ -58,7 +58,11 @@ function addNote(modalElement, overLay) {
   const content = contentInput.value;
 
   if (title === "" || category === "" || content === "") {
-    alert("Please Fill All The Fields");
+    const customAlert = document.querySelector(".custom-alert");
+    customAlert.classList.add("display");
+    setTimeout(() => {
+      customAlert.classList.remove("display");
+    }, 2000);
     return;
   } else {
     NotesList.unshift({ title, category, content });
@@ -109,11 +113,12 @@ function deleteNote() {
     icon.addEventListener("click", () => {
       let indexnum = icon.dataset.index;
       NotesList.splice(indexnum, 1);
+
       deleteAnimation();
       setTimeout(() => {
         saveToStorage();
         renderNote();
-      }, 400);
+      }, 300);
     });
   });
 }
@@ -128,4 +133,29 @@ function deleteAnimation() {
 
 function saveToStorage() {
   localStorage.setItem("NotesList", JSON.stringify(NotesList));
+}
+
+function switchThemes() {
+  let Themes = ["red", "green", "purple", "default"];
+
+  let themebuttons = document.querySelectorAll(".js-theme");
+
+  themebuttons.forEach((themebtn, index) => {
+    themebtn.addEventListener("click", () => {
+      let rootElement = document.documentElement;
+
+      Themes.forEach((theme) => {
+        rootElement.classList.remove(theme);
+      });
+      rootElement.classList.add(`${Themes[index]}`);
+      themebuttons.forEach((btn) => btn.classList.remove("is-toggled"));
+      themebtn.classList.add("is-toggled");
+      previousTheme = Themes[index];
+      localStorage.setItem("theme", JSON.stringify(previousTheme));
+    });
+  });
+}
+function restoreTheme() {
+  let rootElement = document.documentElement;
+  rootElement.classList.add(`${previousTheme}`);
 }

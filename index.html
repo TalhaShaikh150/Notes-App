@@ -22,7 +22,15 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!--Overlay-->
     <div class="overlay"></div>
+    <div class="theme-container">
+      <div class="theme-circle theme-1 js-theme"></div>
+      <div class="theme-circle theme-2 js-theme"></div>
+      <div class="theme-circle theme-3 js-theme"></div>
+      <div class="theme-circle theme-4 js-theme"></div>
+    </div>
+    <!--Headings-->
     <div class="headings">
       <h1 class="title">Note Book</h1>
       <p class="sub-title">Store your thoughts and ideas</p>
@@ -37,6 +45,7 @@
       <button class="add-note js-add-note">Add</button>
     </div>
 
+    <!--Input-Modal-->
     <div class="modal">
       <div class="modal-content">
         <div class="flex">
@@ -55,21 +64,15 @@
         <button class="js-save">Save Note</button>
       </div>
     </div>
-
-    <!-- <div class="note">
-      <div class="note-head">
-        <h3>Hello</h3>
-        <i class="fa-solid fa-trash"></i>
+    <!--Custom-alert-->
+    <div class="custom-alert-container">
+      <div class="custom-alert hide">
+        <p class="alert-message">Dont Leave Empty Fields</p>
       </div>
-      <p class="content">World</p>
-
-      <div class="note-head">
-        <button class="category-btn">Button</button>
-        <p>Date</p>
-      </div>
-    </div> -->
-
+    </div>
+    <!--Notes-Container-->
     <div class="notes-container"></div>
+
     <script src="app.js"></script>
   </body>
 </html>
