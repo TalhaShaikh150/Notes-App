@@ -9,21 +9,16 @@ body {
   background-color: var(--background-body);
 }
 
+
+
 :root.default {
-  --primary-color: #4f46e5;
-  --hover-color: #312baa;
-  --secondary-color: #595757;
-  --accent-color: #fff;
-}
-
-
-:root.red {
   --primary-color: #ef4444;
   --hover-color: #dc2626;
   --secondary-color: #6b7280;
   --accent-color: #f9fafb;
   --background-body: #030712;
 }
+
 
 :root.green {
   --primary-color: #10b981;
@@ -45,6 +40,14 @@ body {
   --accent-color: #f5f3ff;
   --background-body: #030712;
 }
+
+:root.blue{
+  --primary-color: #4f46e5;
+  --hover-color: #312baa;
+  --secondary-color: #595757;
+  --accent-color: #fff;
+}
+
 
 .is-toggled {
   margin-top: -10px;
@@ -141,7 +144,8 @@ body {
 
 
 /*For Modal*/
-.modal {
+.modal,
+.modal-2 {
   display: none;
   position: absolute;
   z-index: 100;
@@ -212,6 +216,11 @@ body {
 }
 
 .fa-trash {
+  cursor: pointer;
+  font-size: 1.4em;
+}
+
+.fa-pen-to-square {
   cursor: pointer;
   font-size: 1.4em;
 
@@ -368,7 +377,8 @@ body {
 @media screen and (max-width: 768px) {
 
 
-  .modal {
+  .modal,
+  .modal-2 {
     min-width: 90vw;
     height: auto;
   }

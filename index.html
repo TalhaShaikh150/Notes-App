@@ -49,7 +49,7 @@
     <div class="modal">
       <div class="modal-content">
         <div class="flex">
-          <h3>New Note</h3>
+          <h3 class="modal-title">New Note</h3>
           <i class="fa-solid fa-xmark"></i>
         </div>
         <label for="title">Title</label>
@@ -64,6 +64,26 @@
         <button class="js-save">Save Note</button>
       </div>
     </div>
+
+    <div class="modal-2 edit-modal">
+      <div class="modal-content">
+        <div class="flex">
+          <h3 class="modal-title">Edit Note</h3>
+          <i class="fa-solid fa-xmark fa-xmark-edit"></i>
+        </div>
+        <label for="title">Title</label>
+        <input type="text" class="js-title" id="title" />
+        <!--Title-->
+        <label for="Category">Category</label>
+        <input type="text" class="js-category" id="Category" />
+        <!--Category-->
+        <label for="Content">Content</label>
+        <textarea name="" class="js-content" id="Content" rows="8"></textarea>
+        <!--Content-->
+        <button class="js-approve">Approve Changes</button>
+      </div>
+    </div>
+
     <!--Custom-alert-->
     <div class="custom-alert-container">
       <div class="custom-alert hide">

@@ -1,6 +1,7 @@
 let NotesList = JSON.parse(localStorage.getItem("NotesList")) || [];
 
 let previousTheme = JSON.parse(localStorage.getItem("theme")) || ["default"];
+
 loadPages();
 function loadPages() {
   const modalElement = document.querySelector(".modal");
@@ -66,8 +67,11 @@ function addNote(modalElement, overLay) {
     return;
   } else {
     NotesList.unshift({ title, category, content });
+
     renderNote();
+
     modalElement.classList.remove("display");
+
     overLay.classList.remove("display");
 
     titleInput.value = "";
@@ -90,7 +94,10 @@ function renderNote() {
             <div class="note">
                 <div class="note-head">
                     <h3>${title}</h3>
+                    <div>
+                    <i class="fa-solid fa-pen-to-square" data-index=${i}></i>
                     <i class="fa-solid fa-trash" data-index=${i}></i>
+                    </div>
                 </div>
                 <p class="content">${content}</p>
 
@@ -105,15 +112,14 @@ function renderNote() {
   noteContainer.innerHTML = html;
   deleteNote();
 }
-
 function deleteNote() {
+  editNote();
   let deleteIcon = document.querySelectorAll(".fa-trash");
 
   deleteIcon.forEach((icon) => {
     icon.addEventListener("click", () => {
       let indexnum = icon.dataset.index;
       NotesList.splice(indexnum, 1);
-
       deleteAnimation();
       setTimeout(() => {
         saveToStorage();
@@ -122,6 +128,52 @@ function deleteNote() {
     });
   });
 }
+
+function editNote() {
+  const modalElement = document.querySelector(".edit-modal");
+  const overLay = document.querySelector(".overlay");
+
+  const titleInput2 = document.querySelector(".modal-2 .js-title");
+  const categoryInput2 = document.querySelector(".modal-2 .js-category");
+  const contentInput2 = document.querySelector(".modal-2 .js-content");
+
+  const editIcon = document.querySelectorAll(".fa-pen-to-square");
+  let index;
+  editIcon.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      index = icon.dataset.index;
+      let note = NotesList[index];
+      overLay.classList.add("display");
+      modalElement.classList.add("display");
+
+      titleInput2.value = note.title;
+      categoryInput2.value = note.category;
+      contentInput2.value = note.content;
+      function updateNote() {
+        note.title = titleInput2.value;
+        note.category = categoryInput2.value;
+        note.content = contentInput2.value;
+        saveToStorage();
+        renderNote();
+
+        overLay.classList.remove("display");
+        modalElement.classList.remove("display");
+      }
+      const approveChanges = document.querySelector(".js-approve");
+      approveChanges.addEventListener("click", updateNote);
+    });
+
+    const closeButton = document.querySelectorAll(".fa-xmark-edit");
+    closeButton.forEach((closebtn) => {
+      closebtn.addEventListener("click", hide);
+      function hide() {
+        modalElement.classList.remove("display");
+        overLay.classList.remove("display");
+      }
+    });
+  });
+}
+
 function deleteAnimation() {
   let notes = document.querySelectorAll(".note");
   notes.forEach((singleNote) => {
@@ -136,7 +188,7 @@ function saveToStorage() {
 }
 
 function switchThemes() {
-  let Themes = ["red", "green", "purple", "default"];
+  let Themes = ["default", "green", "purple", "blue"];
 
   let themebuttons = document.querySelectorAll(".js-theme");
 
