@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notes App</title>
+    <link rel="icon" href="/fav.png" type="image/x-icon" />
+
     <!--Montserrat Font-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,6 +32,7 @@
       <div class="theme-circle theme-3 js-theme"></div>
       <div class="theme-circle theme-4 js-theme"></div>
     </div>
+
     <!--Headings-->
     <div class="headings">
       <h1 class="title">Note Book</h1>
@@ -38,9 +41,8 @@
 
     <div class="nav-container">
       <input type="text" class="nav-input" placeholder="Search Notes" />
-      <select name="" id="">
-        All
-        <option value="">All</option>
+      <select name="" id="" class="select-btn">
+        <option value="All">All</option>
       </select>
       <button class="add-note js-add-note">Add</button>
     </div>
@@ -64,7 +66,7 @@
         <button class="js-save">Save Note</button>
       </div>
     </div>
-
+    <!--For Edit-Note-->
     <div class="modal-2 edit-modal">
       <div class="modal-content">
         <div class="flex">
@@ -84,15 +86,15 @@
       </div>
     </div>
 
+    <!--Notes-Container-->
+    <div class="notes-container"></div>
+
     <!--Custom-alert-->
     <div class="custom-alert-container">
       <div class="custom-alert hide">
         <p class="alert-message">Dont Leave Empty Fields</p>
       </div>
     </div>
-    <!--Notes-Container-->
-    <div class="notes-container"></div>
-
     <script src="app.js"></script>
   </body>
 </html>

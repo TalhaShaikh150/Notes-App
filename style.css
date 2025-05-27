@@ -22,15 +22,10 @@ body {
 
 :root.green {
   --primary-color: #10b981;
-  /* Green */
   --hover-color: #059669;
-  /* Dark green */
   --secondary-color: #4b5563;
-  /* Gray */
   --accent-color: #ecfdf5;
-  /* Mint */
   --background-body: #042f2e;
-  /* Dark teal */
 }
 
 :root.purple {
@@ -41,7 +36,7 @@ body {
   --background-body: #030712;
 }
 
-:root.blue{
+:root.blue {
   --primary-color: #4f46e5;
   --hover-color: #312baa;
   --secondary-color: #595757;
@@ -96,6 +91,18 @@ body {
   text-align: center;
 }
 
+select {
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  border: none;
+  width: 100px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: 0.3s all ese;
+}
+
+
+
 .add-note {
   background-color: var(--primary-color);
   color: var(--accent-color);
@@ -107,7 +114,8 @@ body {
   transition: 0.3s all ease;
 }
 
-.add-note:hover {
+.add-note:hover,
+select:hover {
   cursor: pointer;
   transform: scale(1.1);
   background-color: var(--hover-color);
@@ -241,7 +249,6 @@ body {
 }
 
 
-
 .overlay {
   display: none;
   backdrop-filter: blur(8px);
@@ -268,6 +275,7 @@ body {
   border-radius: 12px;
   min-width: 28%;
   border: 3px solid #f5f3ff;
+  position: relative;
 }
 
 .note:hover {
@@ -275,6 +283,7 @@ body {
   transform: scale(1.05);
   box-shadow: 2px 2px 20px #38333367;
 }
+
 
 .note-head {
   display: flex;
@@ -334,7 +343,6 @@ body {
 
 .theme-1 {
   background-color: red;
-
 }
 
 .theme-2 {
@@ -349,6 +357,7 @@ body {
 .theme-4 {
   background-color: #312baa;
 }
+
 
 @keyframes smoke {
   0% {
@@ -373,6 +382,8 @@ body {
     transform: translateY(0) scale(1);
   }
 }
+
+
 
 @media screen and (max-width: 768px) {
 

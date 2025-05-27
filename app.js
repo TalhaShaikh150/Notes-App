@@ -13,6 +13,7 @@ function loadPages() {
   });
   switchThemes();
   restoreTheme();
+  showcategory();
   renderNote();
   showModal(modalElement, overLay);
   closeModal(modalElement, overLay);
@@ -67,6 +68,7 @@ function addNote(modalElement, overLay) {
     return;
   } else {
     NotesList.unshift({ title, category, content });
+    showcategory();
 
     renderNote();
 
@@ -91,18 +93,20 @@ function renderNote() {
     const { title, category, content } = noteObject;
 
     html += `  
-            <div class="note">
-                <div class="note-head">
-                    <h3>${title}</h3>
-                    <div>
-                    <i class="fa-solid fa-pen-to-square" data-index=${i}></i>
-                    <i class="fa-solid fa-trash" data-index=${i}></i>
-                    </div>
-                </div>
+    <div class="note">
+    <div class="note-head">
+    <h3>${title}</h3>
+    <div>
+    <i class="fa-solid fa-pen-to-square" data-index=${i}></i>
+    <i class="fa-solid fa-trash" data-index=${i}></i>
+    </div>
+    </div>
+    <span class="top-bg"></span>
+
                 <p class="content">${content}</p>
 
                 <div class="note-head">
-                    <button class="category-btn">${category}</button>
+                    <button class="category-btn">${category.toLowerCase()}</button>
                     <p>Date</p>
                 </div>
             </div>
@@ -123,6 +127,8 @@ function deleteNote() {
       deleteAnimation();
       setTimeout(() => {
         saveToStorage();
+        showcategory();
+
         renderNote();
       }, 300);
     });
@@ -162,7 +168,17 @@ function editNote() {
       const approveChanges = document.querySelector(".js-approve");
       approveChanges.addEventListener("click", updateNote);
     });
+    const wholeBody = document.body;
 
+    wholeBody.addEventListener("keydown", (event) => {
+      function hide() {
+        modalElement.classList.remove("display");
+        overLay.classList.remove("display");
+      }
+      if (event.key === "Escape") {
+        hide();
+      }
+    });
     const closeButton = document.querySelectorAll(".fa-xmark-edit");
     closeButton.forEach((closebtn) => {
       closebtn.addEventListener("click", hide);
@@ -173,6 +189,47 @@ function editNote() {
     });
   });
 }
+function showcategory() {
+  const categories = document.querySelector("select");
+  const noteContainer = document.querySelector(".notes-container");
+
+  categories.innerHTML = `<option value="All">All</option>`;
+
+  let optionhtml = "";
+  NotesList.forEach((note) => {
+    if (!optionhtml.includes(note.category)) {
+      optionhtml += `<option class="All-options" value="${note.category.toLowerCase()}">${note.category.toLowerCase()}</option>`;
+    }
+  });
+  categories.innerHTML += optionhtml;
+  categories.addEventListener("change", () => {
+    let updatedHtml = "";
+    NotesList.forEach((note) => {
+      if (
+        categories.value === "All" ||
+        categories.value === note.category.toLowerCase()
+      ) {
+        updatedHtml += `<div class="note">
+                <div class="note-head">
+                    <h3>${note.title}</h3>
+                    <div>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-trash"></i>
+                    </div>
+                </div>
+                <p class="content">${note.content}</p>
+
+                <div class="note-head">
+                    <button class="category-btn">${note.category.toLowerCase()}</button>
+                    <p>Date</p>
+                </div>
+            </div>`;
+      }
+    });
+    noteContainer.innerHTML = updatedHtml;
+    deleteNote();
+  });
+}
 
 function deleteAnimation() {
   let notes = document.querySelectorAll(".note");
@@ -181,10 +238,6 @@ function deleteAnimation() {
       singleNote.classList.add("delete-animation");
     });
   });
-}
-
-function saveToStorage() {
-  localStorage.setItem("NotesList", JSON.stringify(NotesList));
 }
 
 function switchThemes() {
@@ -203,11 +256,17 @@ function switchThemes() {
       themebuttons.forEach((btn) => btn.classList.remove("is-toggled"));
       themebtn.classList.add("is-toggled");
       previousTheme = Themes[index];
+
       localStorage.setItem("theme", JSON.stringify(previousTheme));
     });
   });
 }
+
 function restoreTheme() {
   let rootElement = document.documentElement;
   rootElement.classList.add(`${previousTheme}`);
+}
+
+function saveToStorage() {
+  localStorage.setItem("NotesList", JSON.stringify(NotesList));
 }
