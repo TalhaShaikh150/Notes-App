@@ -13,6 +13,7 @@ function loadPages() {
   });
   switchThemes();
   restoreTheme();
+
   showcategory();
   renderNote();
   showModal(modalElement, overLay);
@@ -69,6 +70,7 @@ function addNote(modalElement, overLay) {
   } else {
     NotesList.unshift({ title, category, content });
     showcategory();
+    searchNotes();
 
     renderNote();
 
@@ -95,18 +97,16 @@ function renderNote() {
     html += `  
     <div class="note">
     <div class="note-head">
-    <h3>${title}</h3>
+    <h3 class="search-title">${title}</h3>
     <div>
     <i class="fa-solid fa-pen-to-square" data-index=${i}></i>
     <i class="fa-solid fa-trash" data-index=${i}></i>
     </div>
     </div>
-    <span class="top-bg"></span>
-
-                <p class="content">${content}</p>
+                <p class="content search-content">${content}</p>
 
                 <div class="note-head">
-                    <button class="category-btn">${category.toLowerCase()}</button>
+                    <button class="category-btn search-category">${category.toLowerCase()}</button>
                     <p>Date</p>
                 </div>
             </div>
@@ -114,7 +114,9 @@ function renderNote() {
   }
 
   noteContainer.innerHTML = html;
+
   deleteNote();
+  searchNotes();
 }
 function deleteNote() {
   editNote();
@@ -211,18 +213,21 @@ function showcategory() {
       ) {
         updatedHtml += `<div class="note">
                 <div class="note-head">
-                    <h3>${note.title}</h3>
+                    <h3 class="
+                    select-t">${note.title}</h3>
                     <div>
                     <i class="fa-solid fa-pen-to-square"></i>
                     <i class="fa-solid fa-trash"></i>
                     </div>
                 </div>
-                <p class="content">${note.content}</p>
+
+                <p class="content select-content">${note.content}</p>
 
                 <div class="note-head">
-                    <button class="category-btn">${note.category.toLowerCase()}</button>
+                    <button class="category-btn select-category">${note.category.toLowerCase()}</button>
                     <p>Date</p>
                 </div>
+                
             </div>`;
       }
     });
@@ -236,6 +241,32 @@ function deleteAnimation() {
   notes.forEach((singleNote) => {
     singleNote.addEventListener("click", () => {
       singleNote.classList.add("delete-animation");
+    });
+  });
+}
+
+function searchNotes() {
+  const allNotes = document.querySelectorAll(".note");
+  const searchBar = document.querySelector(".js-search-note");
+  searchBar.addEventListener("input", () => {
+    const searchvalue = searchBar.value.toLowerCase();
+    allNotes.forEach((note) => {
+      const title = note.querySelector(".search-title").innerHTML.toLowerCase();
+      const category = note
+        .querySelector(".search-category")
+        .innerHTML.toLowerCase();
+      const content = note
+        .querySelector(".search-content")
+        .innerHTML.toLowerCase();
+      if (
+        title.includes(searchvalue) ||
+        category.includes(searchvalue) ||
+        content.includes(searchvalue)
+      ) {
+        note.style.display = "block";
+      } else {
+        note.style.display = "none";
+      }
     });
   });
 }
