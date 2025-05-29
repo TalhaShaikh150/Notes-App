@@ -43,7 +43,6 @@ body {
   --accent-color: #fff;
 }
 
-
 .is-toggled {
   margin-top: -10px;
 }
@@ -98,7 +97,7 @@ select {
   width: 100px;
   border-radius: 4px;
   font-weight: 600;
-  transition: 0.3s all ese;
+  transition: 0.3s all ease;
 }
 
 
@@ -274,7 +273,7 @@ select:hover {
   padding: 10px;
   border-radius: 12px;
   min-width: 28%;
-  border: 3px solid #f5f3ff;
+  border: 2px solid var(--secondary-color);
   position: relative;
 }
 
@@ -314,6 +313,11 @@ select:hover {
   cursor: pointer;
   color: var(--primary-color);
   transform: scale(1.2);
+}
+
+.date-time{
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
 /*Delete Animation*/

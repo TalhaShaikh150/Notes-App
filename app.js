@@ -1,6 +1,11 @@
+import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
+
 let NotesList = JSON.parse(localStorage.getItem("NotesList")) || [];
 
 let previousTheme = JSON.parse(localStorage.getItem("theme")) || ["default"];
+
+let date = dayjs();
+let today = date.format("DD/M/YYYY");
 
 loadPages();
 function loadPages() {
@@ -107,7 +112,7 @@ function renderNote() {
 
                 <div class="note-head">
                     <button class="category-btn search-category">${category.toLowerCase()}</button>
-                    <p>Date</p>
+                    <p class="date-time">${today}</p>
                 </div>
             </div>
         `;
@@ -132,7 +137,7 @@ function deleteNote() {
         showcategory();
 
         renderNote();
-      }, 300);
+      }, 200);
     });
   });
 }
@@ -225,7 +230,7 @@ function showcategory() {
 
                 <div class="note-head">
                     <button class="category-btn select-category">${note.category.toLowerCase()}</button>
-                    <p>Date</p>
+                    <p class="date-time">${today}</p>
                 </div>
                 
             </div>`;
