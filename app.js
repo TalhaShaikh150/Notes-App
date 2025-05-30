@@ -12,13 +12,12 @@ function loadPages() {
   const modalElement = document.querySelector(".modal");
   const overLay = document.querySelector(".overlay");
   const saveButton = document.querySelector(".js-save");
-
   saveButton.addEventListener("click", () => {
     addNote(modalElement, overLay);
   });
-  switchThemes();
+  
   restoreTheme();
-
+  switchThemes();
   showcategory();
   renderNote();
   showModal(modalElement, overLay);
@@ -91,6 +90,8 @@ function addNote(modalElement, overLay) {
   }
 }
 
+
+
 function renderNote() {
   const noteContainer = document.querySelector(".notes-container");
   let html = "";
@@ -99,8 +100,8 @@ function renderNote() {
     let noteObject = NotesList[i];
     const { title, category, content } = noteObject;
 
-    html += `  
-    <div class="note">
+      html += `  
+      <div class="note">
     <div class="note-head">
     <h3 class="search-title">${title}</h3>
     <div>
@@ -113,9 +114,12 @@ function renderNote() {
                 <div class="note-head">
                     <button class="category-btn search-category">${category.toLowerCase()}</button>
                     <p class="date-time">${today}</p>
-                </div>
-            </div>
-        `;
+                    </div>
+                    </div>
+                    `;
+    
+
+ 
   }
 
   noteContainer.innerHTML = html;
@@ -277,7 +281,7 @@ function searchNotes() {
 }
 
 function switchThemes() {
-  let Themes = ["default", "green", "purple", "blue"];
+  let Themes = ["default", "arctic", "purple", "blue", "green"];
 
   let themebuttons = document.querySelectorAll(".js-theme");
 
@@ -288,7 +292,9 @@ function switchThemes() {
       Themes.forEach((theme) => {
         rootElement.classList.remove(theme);
       });
+
       rootElement.classList.add(`${Themes[index]}`);
+
       themebuttons.forEach((btn) => btn.classList.remove("is-toggled"));
       themebtn.classList.add("is-toggled");
       previousTheme = Themes[index];
