@@ -1,4 +1,8 @@
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
+const supabaseUrl = "https://oeuieksflauztarkxvsk.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ldWlla3NmbGF1enRhcmt4dnNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMyNDgxMjAsImV4cCI6MjA2ODgyNDEyMH0.RrgmHluBL_jpYv0tRs2XMM7fAtuFD7w1RmmH6E-if9c";
+const client = supabase.createClient(supabaseUrl, supabaseKey);
 
 let NotesList = JSON.parse(localStorage.getItem("NotesList")) || [];
 
@@ -14,12 +18,13 @@ function loadPages() {
   const saveButton = document.querySelector(".js-save");
   saveButton.addEventListener("click", () => {
     addNote(modalElement, overLay);
+    renderNote();
   });
-  
+
+  renderNote();
   restoreTheme();
   switchThemes();
   showcategory();
-  renderNote();
   showModal(modalElement, overLay);
   closeModal(modalElement, overLay);
 }
@@ -73,6 +78,7 @@ function addNote(modalElement, overLay) {
     return;
   } else {
     NotesList.unshift({ title, category, content });
+    sendData(title, category, content);
     showcategory();
     searchNotes();
 
@@ -85,22 +91,21 @@ function addNote(modalElement, overLay) {
     titleInput.value = "";
     categoryInput.value = "";
     contentInput.value = "";
-
-    saveToStorage();
   }
 }
 
-
-
-function renderNote() {
+async function renderNote() {
   const noteContainer = document.querySelector(".notes-container");
   let html = "";
 
+  let abc = await getData();
+  NotesList = abc;
+
   for (let i = 0; i < NotesList.length; i++) {
     let noteObject = NotesList[i];
-    const { title, category, content } = noteObject;
+    const { title, category, content } = await noteObject;
 
-      html += `  
+    html += `  
       <div class="note">
     <div class="note-head">
     <h3 class="search-title">${title}</h3>
@@ -117,9 +122,6 @@ function renderNote() {
                     </div>
                     </div>
                     `;
-    
-
- 
   }
 
   noteContainer.innerHTML = html;
@@ -132,12 +134,15 @@ function deleteNote() {
   let deleteIcon = document.querySelectorAll(".fa-trash");
 
   deleteIcon.forEach((icon) => {
-    icon.addEventListener("click", () => {
-      let indexnum = icon.dataset.index;
+    icon.addEventListener("click", async () => {
+      let indexnum;
+      NotesList.forEach((singleNote) => {
+        indexnum = singleNote.id;
+      });
       NotesList.splice(indexnum, 1);
-      deleteAnimation();
+      await deleteData(indexnum);
+
       setTimeout(() => {
-        saveToStorage();
         showcategory();
 
         renderNote();
@@ -145,6 +150,12 @@ function deleteNote() {
     });
   });
 }
+
+let indexnum;
+NotesList.forEach((singleNote) => {
+  indexnum = singleNote.id;
+});
+NotesList.splice(indexnum, 1);
 
 function editNote() {
   const modalElement = document.querySelector(".edit-modal");
@@ -155,30 +166,38 @@ function editNote() {
   const contentInput2 = document.querySelector(".modal-2 .js-content");
 
   const editIcon = document.querySelectorAll(".fa-pen-to-square");
+
   let index;
   editIcon.forEach((icon) => {
     icon.addEventListener("click", () => {
       index = icon.dataset.index;
+
       let note = NotesList[index];
+
       overLay.classList.add("display");
       modalElement.classList.add("display");
 
       titleInput2.value = note.title;
       categoryInput2.value = note.category;
       contentInput2.value = note.content;
-      function updateNote() {
+
+      let noteId = note.id;
+
+      async function updateNote() {
         note.title = titleInput2.value;
         note.category = categoryInput2.value;
         note.content = contentInput2.value;
-        saveToStorage();
-        renderNote();
 
         overLay.classList.remove("display");
         modalElement.classList.remove("display");
+      await  updateData(noteId, note);
+        renderNote();
       }
+
       const approveChanges = document.querySelector(".js-approve");
       approveChanges.addEventListener("click", updateNote);
     });
+
     const wholeBody = document.body;
 
     wholeBody.addEventListener("keydown", (event) => {
@@ -190,6 +209,7 @@ function editNote() {
         hide();
       }
     });
+
     const closeButton = document.querySelectorAll(".fa-xmark-edit");
     closeButton.forEach((closebtn) => {
       closebtn.addEventListener("click", hide);
@@ -309,6 +329,28 @@ function restoreTheme() {
   rootElement.classList.add(`${previousTheme}`);
 }
 
-function saveToStorage() {
-  localStorage.setItem("NotesList", JSON.stringify(NotesList));
+async function sendData(title, category, content) {
+  const { error } = await client
+    .from("todo")
+    .insert({ title, category, content });
+}
+
+async function getData() {
+  const { data, error } = await client.from("todo").select();
+  if (data) {
+    return data;
+  }
+}
+
+async function deleteData(indexnum) {
+  deleteAnimation();
+  const response = await client.from("todo").delete().eq("id", indexnum);
+  console.log(typeof indexnum);
+}
+
+async function updateData(noteId, note) {
+  const { data, error } = await client
+    .from("todo")
+    .update(note)
+    .eq("id", noteId);
 }
